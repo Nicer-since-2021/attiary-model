@@ -8,9 +8,12 @@ from kobert.utils import get_tokenizer
 from kobert.pytorch_kobert import get_pytorch_kobert_model
 from bert_classifier import BERTClassifier
 
-model = torch.load('./emotion_clsf_0311.pth', map_location=torch.device('cpu'))
+emotion_clsf_weights_file = "model_weights.pth"
 
 kobert_model, vocab = get_pytorch_kobert_model()
+model = BERTClassifier(kobert_model, dr_rate=0.5)
+model.load_state_dict(torch.load(emotion_clsf_weights_file, map_location=torch.device('cpu')))
+model.eval()
 
 tokenizer = get_tokenizer()
 tok = nlp.data.BERTSPTokenizer(tokenizer, vocab, lower=False)
@@ -40,8 +43,6 @@ def predict(predict_sentence):
 
     another_test = BERTDataset(dataset_another, 0, 1, tok, max_len, True, False)
     test_dataloader = torch.utils.data.DataLoader(another_test, batch_size=batch_size, num_workers=0)
-
-    model.eval()
 
     for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(test_dataloader):
         # print(batch_id + '\n')
@@ -74,8 +75,4 @@ def predict(predict_sentence):
             elif np.argmax(logits) == 7:
                 return "후회"
 
-
-print(predict("아 짜증나!"))
-
-
-
+# print(predict("아 짜증나!")) # for test

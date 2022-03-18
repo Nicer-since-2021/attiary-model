@@ -18,15 +18,18 @@
 ```
 pip install virtualenv
 ```
-(2) 프로젝트를 생성하고 싶은 곳으로 이동 한 뒤 새로운 프로젝트 생성합니다. 
+(2) 프로젝트를 생성하고 싶은 곳으로 이동 한 뒤 새로운 프로젝트 생성합니다. 해당 프로젝트명의 폴더가 생성됩니다.
 ```
-cd 원하는 폴더로 이동
 virtualenv 프로젝트명
 ```
 (3) 가상 환경 가동합니다.
 ```
+cd 프로젝트명
 source bin/activate
 ```
+왼쪽에 (프로젝트 이름) 으로 현재 위치가 표시되면 활성화되어 있다는 뜻입니다.
+
+<img alt="image" src="https://user-images.githubusercontent.com/68107000/158960095-6eb88b18-f5de-487b-a49e-d2077cfcb978.png">
 
 참고: 개발이 끝난 후 가상 환경 비활성화 합니다.
 ```
@@ -66,6 +69,8 @@ pip install git+https://git@github.com/SKTBrain/KoBERT.git@master
 모델을 학습시키는 코드는 [# 링크](https://github.com/Nicer-since-2021/multiclass-emotion-classification-using-KoBERT/blob/main/SOJIN/emotion_classification_kobert.ipynb) 에서 확인할 수 있습니다.
 
 ### 4. github의 코드를 다운 받아 실행시키기
+
+해당 레포의 코드를 다운받아 프로젝트 폴더에 적절히 풀어주세요.
 
 <img width="1094" alt="image" src="https://user-images.githubusercontent.com/68107000/158560343-f8c77654-a629-4c8e-bb7a-4ce1883156b7.png">
 

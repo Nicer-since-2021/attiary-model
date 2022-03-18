@@ -42,15 +42,21 @@ rm -rf 프로젝트명
 
 ### 2. 가상환경에 필요한 라이브러리 설치하기
 
+**requirements.txt 파일 추가하여 변경할 예정..!**
+
 **설치 라이브러리 종류**
+- flask
 - torch
 - kobert
 - gluonnlp
+- pandas
+- tqdm
 
 **설치 방법**
 
 가상 환경이 활성화 되어 있는 상태에서 아래의 명령어를 통해 라이브러리를 설치합니다. 
 ``` python
+pip install flask
 pip install torch
 pip install gluonnlp pandas tqdm
 pip install git+https://git@github.com/SKTBrain/KoBERT.git@master

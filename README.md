@@ -6,7 +6,16 @@
 
 입력한 문장에 대해 공감해주거나 반응해주는 문장을 반환해주는 기능을 추가할 예정입니다.
 
-## 실행 방법
+## URL
+https://api.attiary.net 🎉
+
+2024년 말까지 운영할 계획입니다.
+
+## API DOCS
+
+개발 후 수정할 예정입니다 
+
+## 코드 실행 방법
 
 ### 0. 개발 IDE 설치
 사용한 Python IDE: [PyCharm](https://www.jetbrains.com/pycharm/) by JetBrains
@@ -14,18 +23,24 @@
 다른 IDE를 사용해도 됩니다. 
 
 ### 1. 가상 환경 구축하기
-(1) command 창을 열어 virtualenv를 설치합니다.
+#### (1) command 창을 열어 virtualenv를 설치합니다.
 ```
 pip install virtualenv
 ```
-(2) 프로젝트를 생성하고 싶은 곳으로 이동 한 뒤 새로운 프로젝트 생성합니다. 해당 프로젝트명의 폴더가 생성됩니다.
+#### (2) 프로젝트를 생성하고 싶은 곳으로 이동 한 뒤 새로운 프로젝트 생성합니다. 해당 프로젝트명의 폴더가 생성됩니다.
 ```
 virtualenv 프로젝트명
 ```
-(3) 가상 환경 가동합니다.
+#### (3) 가상 환경 가동합니다.
+**Mac**
 ```
 cd 프로젝트명
 source bin/activate
+```
+**Windows**
+```
+cd 프로젝트명
+Scripts/activate
 ```
 왼쪽에 (프로젝트 이름) 으로 현재 위치가 표시되면 활성화되어 있다는 뜻입니다.
 
@@ -42,25 +57,16 @@ rm -rf 프로젝트명
 
 ### 2. 가상환경에 필요한 라이브러리 설치하기
 
-**requirements.txt 파일 추가하여 변경할 예정..!**
+아래의 명령어를 입력한다.
+```
+pip install -r requirements.txt
+```
 
+[설치가 너무 느려요 → 오류 해결 방법](https://uiandwe.tistory.com/1315)
 **설치 라이브러리 종류**
 - flask
-- torch
-- kobert
-- gluonnlp
-- pandas
-- tqdm
+- [SKTBrain/KoBERT의 요구 라이브러리](https://github.com/SKTBrain/KoBERT/blob/master/requirements.txt)
 
-**설치 방법**
-
-가상 환경이 활성화 되어 있는 상태에서 아래의 명령어를 통해 라이브러리를 설치합니다. 
-``` python
-pip install flask
-pip install torch
-pip install gluonnlp pandas tqdm
-pip install git+https://git@github.com/SKTBrain/KoBERT.git@master
-```
 
 ### 3. 모델 준비하기
 

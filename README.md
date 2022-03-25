@@ -66,8 +66,8 @@ pip install -r requirements.txt
 pip install --upgrade --no-deps --force-reinstall -r requirements.txt
 ```
 
-**설치 라이브러리 종류**
-- flask
+**[설치 라이브러리 종류](https://github.com/Nicer-since-2021/attiary-model/blob/main/requirements.txt)**
+- 위 링크와
 - [SKTBrain/KoBERT의 요구 라이브러리](https://github.com/SKTBrain/KoBERT/blob/master/requirements.txt)
 
 

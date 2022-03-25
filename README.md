@@ -61,8 +61,11 @@ rm -rf 프로젝트명
 ```
 pip install -r requirements.txt
 ```
+설치가 너무 느리거나 오류가 날 경우 [아래의 명령어](https://uiandwe.tistory.com/1330)로 설치한다.
+```
+pip install --upgrade --no-deps --force-reinstall -r requirements.txt
+```
 
-[설치가 너무 느려요 → 오류 해결 방법](https://uiandwe.tistory.com/1315)
 **설치 라이브러리 종류**
 - flask
 - [SKTBrain/KoBERT의 요구 라이브러리](https://github.com/SKTBrain/KoBERT/blob/master/requirements.txt)

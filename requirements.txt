@@ -1,0 +1,6 @@
+flask
+torch
+gluonnlp
+pandas
+tqdm
+git+https://git@github.com/SKTBrain/KoBERT.git@master

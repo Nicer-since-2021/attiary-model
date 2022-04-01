@@ -1,6 +1,5 @@
 import os
-import chatbot
-from model import emotion
+from model import emotion, chatbot
 from util.emotion import Emotion
 from flask import Flask, request, jsonify
 from werkzeug.exceptions import BadRequest

@@ -2,16 +2,15 @@ import torch
 
 import gluonnlp as nlp
 import numpy as np
-from torch.utils.data import Dataset, DataLoader
-
+from torch.utils.data import Dataset
 from kobert.utils import get_tokenizer
 from kobert.pytorch_kobert import get_pytorch_kobert_model
-from bert_classifier import BERTClassifier
-
-emotion_clsf_weights_file = "model_weights.pth"
+from model import bert_classifier
 
 kobert_model, vocab = get_pytorch_kobert_model()
-model = BERTClassifier(kobert_model, dr_rate=0.5)
+model = bert_classifier.BERTClassifier(kobert_model, dr_rate=0.5)
+
+emotion_clsf_weights_file = "./res/emotion.pth"
 model.load_state_dict(torch.load(emotion_clsf_weights_file, map_location=torch.device('cpu')))
 model.eval()
 
@@ -58,21 +57,23 @@ def predict(predict_sentence):
             logits = i
             logits = logits.detach().cpu().numpy()
 
-            if np.argmax(logits) == 0:
-                return "기쁨"
-            elif np.argmax(logits) == 1:
-                return "희망"
-            elif np.argmax(logits) == 2:
-                return "중립"
-            elif np.argmax(logits) == 3:
-                return "슬픔"
-            elif np.argmax(logits) == 4:
-                return "분노"
-            elif np.argmax(logits) == 5:
-                return "불안"
-            elif np.argmax(logits) == 6:
-                return "피곤"
-            elif np.argmax(logits) == 7:
-                return "후회"
+            return np.argmax(logits)
+            # if np.argmax(logits) == 0:
+            #     return Emotion.HAPPINESS
+            # elif np.argmax(logits) == 1:
+            #     return Emotion.HOPE
+            # elif np.argmax(logits) == 2:
+            #     return Emotion.NEUTRALITY
+            # elif np.argmax(logits) == 3:
+            #     return Emotion.SADNESS
+            # elif np.argmax(logits) == 4:
+            #     return Emotion.ANGER
+            # elif np.argmax(logits) == 5:
+            #     return Emotion.ANXIETY
+            # elif np.argmax(logits) == 6:
+            #     return Emotion.TIREDNESS
+            # elif np.argmax(logits) == 7:
+            #     return Emotion.REGRET
 
-# print(predict("아 짜증나!")) # for test
+
+print(predict("아 짜증나!"))  # for test

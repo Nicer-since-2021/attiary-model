@@ -1,0 +1,11 @@
+.git
+.gitignore
+
+.idea
+.cache
+
+.Scripts
+.Lib
+
+Dockerfile
+*.md

@@ -1,17 +1,21 @@
-import torch
-
 import gluonnlp as nlp
 import numpy as np
-from torch.utils.data import Dataset
-from kobert.utils import get_tokenizer
+import torch
 from kobert.pytorch_kobert import get_pytorch_kobert_model
-from model import bert_classifier
+from kobert.utils import get_tokenizer
+from torch.utils.data import Dataset
+
+from model.emotion import classifier
+from util.emotion import Emotion
 
 kobert_model, vocab = get_pytorch_kobert_model()
-model = bert_classifier.BERTClassifier(kobert_model, dr_rate=0.5)
+model = classifier.BERTClassifier(kobert_model, dr_rate=0.5, num_classes=3)
 
-emotion_clsf_weights_file = "./res/emotion.pth"
-model.load_state_dict(torch.load(emotion_clsf_weights_file, map_location=torch.device('cpu')))
+ctx = "cuda" if torch.cuda.is_available() else "cpu"
+device = torch.device(ctx)
+
+emotion_clsf_weights_file = "./checkpoint/emotion_pn.pth"
+model.load_state_dict(torch.load(emotion_clsf_weights_file, map_location=device))
 model.eval()
 
 tokenizer = get_tokenizer()
@@ -44,7 +48,6 @@ def predict(predict_sentence):
     test_dataloader = torch.utils.data.DataLoader(another_test, batch_size=batch_size, num_workers=0)
 
     for batch_id, (token_ids, valid_length, segment_ids, label) in enumerate(test_dataloader):
-        # print(batch_id + '\n')
         token_ids = token_ids.long()
         segment_ids = segment_ids.long()
 
@@ -58,22 +61,3 @@ def predict(predict_sentence):
             logits = logits.detach().cpu().numpy()
 
             return np.argmax(logits)
-            # if np.argmax(logits) == 0:
-            #     return Emotion.HAPPINESS
-            # elif np.argmax(logits) == 1:
-            #     return Emotion.HOPE
-            # elif np.argmax(logits) == 2:
-            #     return Emotion.NEUTRALITY
-            # elif np.argmax(logits) == 3:
-            #     return Emotion.SADNESS
-            # elif np.argmax(logits) == 4:
-            #     return Emotion.ANGER
-            # elif np.argmax(logits) == 5:
-            #     return Emotion.ANXIETY
-            # elif np.argmax(logits) == 6:
-            #     return Emotion.TIREDNESS
-            # elif np.argmax(logits) == 7:
-            #     return Emotion.REGRET
-
-
-print(predict("아 짜증나!"))  # for test

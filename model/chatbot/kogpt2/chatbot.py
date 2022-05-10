@@ -1,15 +1,8 @@
-# -*- coding: utf-8 -*-
 import argparse
-import logging
 
-import numpy as np
-import pandas as pd
 import torch
 from pytorch_lightning import Trainer
-from pytorch_lightning.callbacks import ModelCheckpoint
 from pytorch_lightning.core.lightning import LightningModule
-from torch.utils.data import DataLoader, Dataset
-from transformers.optimization import AdamW, get_cosine_schedule_with_warmup
 from transformers import PreTrainedTokenizerFast, GPT2LMHeadModel
 
 parser = argparse.ArgumentParser(description='Simsimi based on KoGPT-2')
@@ -26,7 +19,7 @@ parser.add_argument('--sentiment',
 
 parser.add_argument('--model_params',
                     type=str,
-                    default='chatbot.ckpt',
+                    default='./checkpoint/chatbot_epoch04.ckpt',
                     help='model binary for starting chat')
 
 parser.add_argument('--train',
@@ -34,8 +27,6 @@ parser.add_argument('--train',
                     default=False,
                     help='for training')
 
-logger = logging.getLogger()
-logger.setLevel(logging.INFO)
 
 U_TKN = '<usr>'
 S_TKN = '<sys>'
@@ -87,12 +78,11 @@ class KoGPT2Chat(LightningModule):
         return output.logits
 
     def chat(self, input_sentence, sent='0'):
-        #
         tok = TOKENIZER
         sent_tokens = tok.tokenize(sent)
         with torch.no_grad():
-            # p = input('user > ')
             q = input_sentence.strip()
+            q = q[len(q) - 32:]
             a = ''
             while 1:
                 input_ids = torch.LongTensor(tok.encode(U_TKN + q + SENT + sent + S_TKN + a)).unsqueeze(dim=0)
@@ -104,19 +94,27 @@ class KoGPT2Chat(LightningModule):
                 if gen == EOS:
                     break
                 a += gen.replace('▁', ' ')
-        return a.strip()
+            return a.strip()
 
 
 parser = KoGPT2Chat.add_model_specific_args(parser)
 parser = Trainer.add_argparse_args(parser)
 args = parser.parse_args()
-logging.info(args)
 
 model = KoGPT2Chat(args)
-model = KoGPT2Chat.load_from_checkpoint(args.model_params)
-
-def predict(predict_sentence):
-    return model.chat(predict_sentence)
+model = model.load_from_checkpoint(args.model_params)
 
 
-print(model.chat("우울해!!"))
+def predict(sent):
+    return model.chat(sent)
+
+
+print("=" * 50)
+print("[*] kogpt2 chatbot test")
+print("\'특별한 이유가 없는데 그냥 불안해\' 챗봇 응답: " + predict("특별한 이유가 없는데 그냥 불안해"))
+print("\'특별한 이유가 없는데 그냥 불안하고 눈물이 나와\' 챗봇 응답: " + predict("특별한 이유가 없는데 그냥 불안하고 눈물이 나와"))
+print("\'이 세상에서 완전히 사라지고 싶어\' 챗봇 응답: " + predict("이 세상에서 완전히 사라지고 싶어"))
+print("\'가슴이 답답해서 터질 것만 같아요.\' 챗봇 응답: " + predict("가슴이 답답해서 터질 것만 같아요."))
+print("\'남들이 나를 어떻게 생각할지 신경쓰게 돼\' 챗봇 응답: " + predict("남들이 나를 어떻게 생각할지 신경쓰게 돼"))
+print("\'자존감이 낮아지는 것 같아\' 챗봇 응답: " + predict("자존감이 낮아지는 것 같아"))
+print("=" * 50)

@@ -1,11 +1,15 @@
 .git
 .gitignore
-
 .idea
 .cache
+.DS_Store
 
-.Scripts
-.Lib
+__pycache__
+Scripts
+Lib
 
-Dockerfile
 *.md
+*.cfg
+
+preprocess
+kss_example.py

@@ -19,7 +19,7 @@ parser.add_argument('--sentiment',
 
 parser.add_argument('--model_params',
                     type=str,
-                    default='./checkpoint/chatbot_epoch04.ckpt',
+                    default='./checkpoint/chatbot_kogpt2.ckpt',
                     help='model binary for starting chat')
 
 parser.add_argument('--train',

@@ -20,7 +20,10 @@ def hello():
 def classifyEmotion():
     sentence = request.args.get("s")
     if sentence is None or len(sentence) == 0:
-        raise BadRequest()
+        return jsonify({
+            "emotion_no": 2,
+            "emotion": "중립"
+        })
 
     result = emotion.predict(sentence)
     print("[*] 감정 분석 결과: " + Emotion.to_string(result))
@@ -34,7 +37,17 @@ def classifyEmotion():
 def classifyEmotionDiary():
     sentence = request.args.get("s")
     if sentence is None or len(sentence) == 0:
-        raise BadRequest()
+        return jsonify({
+            "joy": 0,
+            "hope": 0,
+            "neutrality": 0,
+            "anger": 0,
+            "sadness": 0,
+            "anxiety": 0,
+            "tiredness": 0,
+            "regret": 0,
+            "depression": 0
+        })
 
     predict, dep_predict = predictDiary(sentence)
     return jsonify({
@@ -50,11 +63,13 @@ def classifyEmotionDiary():
     })
 
 
-@app.route('/chatbot/v1')
+@app.route('/chatbot/g')
 def reactChatbotV1():
     sentence = request.args.get("s")
     if sentence is None or len(sentence) == 0:
-        raise BadRequest()
+        return jsonify({
+            "answer": "듣고 있어요. 더 말씀해주세요~ (끄덕끄덕)"
+        })
 
     answer = ch_v1.predict(sentence)
     return jsonify({
@@ -62,11 +77,13 @@ def reactChatbotV1():
     })
 
 
-@app.route('/chatbot/v2')
+@app.route('/chatbot/b')
 def reactChatbotV2():
     sentence = request.args.get("s")
     if sentence is None or len(sentence) == 0:
-        raise BadRequest()
+        return jsonify({
+            "answer": "듣고 있어요. 더 말씀해주세요~ (끄덕끄덕)"
+        })
 
     answer, category, desc, softmax = ch_v2.chat(sentence)
     return jsonify({
@@ -86,9 +103,9 @@ def predictDiary(s):
         if emotion.predict_depression(sent) == Depression.DEPRESS:
             dep_cnt += 1
 
-    for i in range(7):
+    for i in range(8):
         predict[i] = float("{:.2f}".format(predict[i] / total_cnt))
-    dep_cnt /= total_cnt
+    dep_cnt = float("{:.2f}".format(dep_cnt/total_cnt))
     return predict, dep_cnt
 
 

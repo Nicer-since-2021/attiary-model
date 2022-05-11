@@ -13,3 +13,4 @@ Lib
 
 preprocess
 kss_example.py
+*/__pycache__/*

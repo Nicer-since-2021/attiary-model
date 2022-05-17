@@ -12,4 +12,5 @@ Lib
 *.cfg
 
 preprocess
-kss_example.py
+*/__pycache__/*
+checkpoint/emotion_pn_v5.pth

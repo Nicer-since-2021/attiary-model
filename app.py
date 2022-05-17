@@ -1,6 +1,6 @@
 import os
-from model.chatbot.kogpt2 import chatbot as ch_v1
-from model.chatbot.kobert import chatbot as ch_v2
+from model.chatbot.kogpt2 import chatbot as ch_kogpt2
+from model.chatbot.kobert import chatbot as ch_kobert
 from model.emotion import service as emotion
 from util.emotion import Emotion
 from util.depression import Depression
@@ -12,6 +12,7 @@ app = Flask(__name__)
 Emotion = Emotion()
 Depression = Depression()
 
+@app.route('/')
 def hello():
     return "deep learning server is running 💗"
 
@@ -19,7 +20,7 @@ def hello():
 @app.route('/emotion')
 def classifyEmotion():
     sentence = request.args.get("s")
-    if sentence is None or len(sentence) == 0:
+    if sentence is None or len(sentence) == 0 or sentence == '\n':
         return jsonify({
             "emotion_no": 2,
             "emotion": "중립"
@@ -36,7 +37,7 @@ def classifyEmotion():
 @app.route('/diary')
 def classifyEmotionDiary():
     sentence = request.args.get("s")
-    if sentence is None or len(sentence) == 0:
+    if sentence is None or len(sentence) == 0 or sentence == '\n':
         return jsonify({
             "joy": 0,
             "hope": 0,
@@ -66,12 +67,12 @@ def classifyEmotionDiary():
 @app.route('/chatbot/g')
 def reactChatbotV1():
     sentence = request.args.get("s")
-    if sentence is None or len(sentence) == 0:
+    if sentence is None or len(sentence) == 0 or sentence == '\n':
         return jsonify({
             "answer": "듣고 있어요. 더 말씀해주세요~ (끄덕끄덕)"
         })
 
-    answer = ch_v1.predict(sentence)
+    answer = ch_kogpt2.predict(sentence)
     return jsonify({
         "answer": answer
     })
@@ -80,12 +81,12 @@ def reactChatbotV1():
 @app.route('/chatbot/b')
 def reactChatbotV2():
     sentence = request.args.get("s")
-    if sentence is None or len(sentence) == 0:
+    if sentence is None or len(sentence) == 0 or sentence == '\n':
         return jsonify({
             "answer": "듣고 있어요. 더 말씀해주세요~ (끄덕끄덕)"
         })
 
-    answer, category, desc, softmax = ch_v2.chat(sentence)
+    answer, category, desc, softmax = ch_kobert.chat(sentence)
     return jsonify({
         "answer": answer,
         "category": category,

@@ -111,10 +111,11 @@ pip install --upgrade --no-deps --force-reinstall -r requirements.txt
 
 각각의 학습 코드입니다.
 
-`emotion_p.pth`: 
-`emotion_pn.pth`: 
-`kobert_chatbot.pth`: https://github.com/hoit1302/kobert-wellness-chatbot
-`kogpt2_chatbot.ckpt`: https://github.com/hoit1302/kogpt2-wellness-chatbot
+- 긍정/중립/부정 분류에 쓰이는 `emotion_p.pth`: 
+- 기쁨/희망 분류에 쓰이는 `emotion_pn.pth`: 
+- 중립/슬픔/분노/불안/후회/피곤 분류에 쓰이고, 우울/비우울 분류에 쓰이고, 위로형 반응봇에 쓰이는 `kobert_chatbot.pth`: https://github.com/hoit1302/kobert-wellness-chatbot
+- 공감형 반응봇에 쓰이는 `kogpt2_chatbot.ckpt`: https://github.com/hoit1302/kogpt2-wellness-chatbot
+
 
 감정 분류와 관련된 학습은 [해당 블로그 링크](https://hoit1302.tistory.com/159)에서 설명과 함께 볼 수 있습니다. 
 

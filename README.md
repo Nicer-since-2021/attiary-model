@@ -12,9 +12,7 @@ kogpt2 기반 공감형 챗봇, kobert 기반 위로형 챗봇을 운영합니�
 
 ## URL
 
-http://43.155.140.77:5000/
-
-학교에서 tencent cloud를 지원받아 gpu 서버 위에 올려두었습니다. 6월 중순까지 지원될 것으로 예상합니다.
+학교에서 tencent cloud를 지원받아 gpu 서버에서 운영했습니다.
 
 ## API DOCS
 
